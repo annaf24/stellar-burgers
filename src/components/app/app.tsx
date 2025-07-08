@@ -5,11 +5,22 @@ import styles from './app.module.css';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 
+import { useEffect } from 'react';
+import { fetchIngredients } from '../../services/slices/ingredients';
+import { useDispatch } from '../../services/store';
+
 const App = () => {
 
   const location = useLocation();
   const backgroundLocation = location.state?.background;
-  const onClose = () => window.history.back()
+  const onClose = () => window.history.back();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    //LOG
+    console.log('Загрузка ингредиентов...');
+    dispatch(fetchIngredients());
+  }, [dispatch]);
 
   return (
     <div className={styles.app}>

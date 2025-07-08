@@ -7,8 +7,7 @@ import {
 import ingredientsSlice from './slices/ingredients';
 
 const rootReducer = combineReducers({
-  ingredients: ingredientsSlice.reducer,
-
+  ingredients: ingredientsSlice.reducer
 }); // +++Заменить на импорт настоящего редьюсера
 
 const store = configureStore({

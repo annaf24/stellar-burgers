@@ -18,6 +18,15 @@ const initialState: TOrderState = {
 
 //Thunk-функции
 
+//Создать заказ
+export const createOrder = createAsyncThunk(
+  'order/createOrder',
+  async (ingredientIds: string[]) => {
+    const orderResponse = await orderBurgerApi(ingredientIds);
+    return orderResponse.order;
+  }
+);
+
 //Получить заказы
 export const fetchOrders = createAsyncThunk('orders/fetchOrders', getOrdersApi);
 
@@ -47,6 +56,18 @@ const orderSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(createOrder.pending, (state) => {
+        state.orderRequest = true;
+        state.error = null;
+      })
+      .addCase(createOrder.fulfilled, (state, action) => {
+        state.orderRequest = false;
+        state.order = action.payload;
+      })
+      .addCase(createOrder.rejected, (state, action) => {
+        state.orderRequest = false;
+        state.error = action.error.message || 'Ошибка';
+      })
       .addCase(fetchOrders.pending, (state) => {
         state.orderRequest = true;
         state.error = null;

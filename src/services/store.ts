@@ -5,13 +5,17 @@ import {
   useSelector as selectorHook
 } from 'react-redux';
 import ingredientsSlice from './slices/ingredients';
-import constructorSlice from './slices/constructor';
+import constructorSlice from './slices/burger-constructor';
 import orderSlice from './slices/order';
+import feedSlice from './slices/feeds';
+import profileSlice from './slices/profile';
 
 const rootReducer = combineReducers({
   ingredients: ingredientsSlice.reducer,
-  constructor: constructorSlice.reducer,
-  order: orderSlice.reducer
+  burgerConstructor: constructorSlice.reducer,
+  order: orderSlice.reducer,
+  feed: feedSlice.reducer,
+  profile: profileSlice.reducer
 }); // +++Заменить на импорт настоящего редьюсера
 
 const store = configureStore({

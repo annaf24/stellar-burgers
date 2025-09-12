@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TConstructorIngredient } from '../../utils/types';
+import { TConstructorIngredient, TIngredient } from '../../utils/types';
 import { nanoid } from 'nanoid';
 
 type TConstructorState = {
@@ -13,16 +13,27 @@ const initialState: TConstructorState = {
 };
 
 const constructorSlice = createSlice({
-  name: 'constructor',
+  name: 'burgerConstructor',
   initialState,
   reducers: {
-    addIngredient: (state, action: PayloadAction<TConstructorIngredient>) => {
-      const ingredient = { ...action.payload, id: nanoid() };
+    addIngredient: {
+      reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
+        console.log('Reducer received payload:', action.payload);
+        console.log('State before adding:', state);
 
-      if (ingredient.type === 'bun') {
-        state.bun = ingredient;
-      } else {
-        state.ingredients.push(ingredient);
+        if (action.payload.type === 'bun') {
+          state.bun = action.payload;
+        } else {
+          state.ingredients.push(action.payload);
+        }
+        console.log('State after adding:', state);
+      },
+      prepare: (ingredient: TIngredient) => {
+        //LOG
+        console.log('Preparing ingredient for reducer:', ingredient);
+        return {
+          payload: { ...ingredient, id: nanoid() } as TConstructorIngredient
+        };
       }
     },
     removeIngredient: (state, action: PayloadAction<string>) => {
@@ -45,8 +56,9 @@ const constructorSlice = createSlice({
     }
   },
   selectors: {
-    getIngredients: (state) => state.ingredients,
-    getBun: (state) => state.bun,
+    // getIngredients: (state) => state.ingredients,
+    // getBun: (state) => state.bun,
+    // getConstructorSelector: (state) => state,
     getConstructorItems: (state) => ({
       bun: state.bun,
       ingredients: state.ingredients ?? []
@@ -54,12 +66,14 @@ const constructorSlice = createSlice({
   }
 });
 
-export const {
-  addIngredient,
-  removeIngredient,
-  moveIngredient,
-  resetConstructor
-} = constructorSlice.actions;
+// export const {
+//   addIngredient,
+//   removeIngredient,
+//   moveIngredient,
+//   resetConstructor
+// } = constructorSlice.actions;
+
+export const constructorActions = constructorSlice.actions;
 
 export const constructorSelectors = constructorSlice.selectors;
 

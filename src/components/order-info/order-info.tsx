@@ -4,18 +4,11 @@ import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useSelector } from '../../services/store';
 import { ingredientsSelectors } from '../../services/slices/ingredients';
+import { orderSelectors } from '../../services/slices/order';
 
 export const OrderInfo: FC = () => {
-  /** +-TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
+  /** +++TODO: взять переменные orderData и ingredients из стора */
+  const orderData = useSelector(orderSelectors.getOrder);
 
   const ingredients: TIngredient[] = useSelector(
     ingredientsSelectors.getIngredients

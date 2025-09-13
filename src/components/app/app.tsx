@@ -20,6 +20,7 @@ import { fetchIngredients } from '../../services/slices/ingredients';
 import { useDispatch } from '../../services/store';
 
 import { OnlyAuth, OnlyUnAuth } from '../../components/protected-route';
+import { getUser } from '../../services/slices/profile';
 
 const App = () => {
   const location = useLocation();
@@ -29,10 +30,9 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    //LOG
-    console.log('Загрузка ингредиентов...');
     dispatch(fetchIngredients());
-  }, [dispatch]);
+    dispatch(getUser());
+  }, []);
 
   return (
     <div className={styles.app}>

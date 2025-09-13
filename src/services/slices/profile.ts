@@ -76,7 +76,7 @@ const profileSlice = createSlice({
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
-        state.isAuthChecked = false;
+        state.isAuthChecked = true;
         state.isLoading = false;
       })
       .addCase(updateUser.fulfilled, (state, action) => {
@@ -87,6 +87,11 @@ const profileSlice = createSlice({
         state.user = null;
         state.error = null;
         state.isAuthChecked = false;
+        state.isLoading = false;
+      })
+      .addCase(getUser.rejected, (state) => {
+        state.user = null;
+        state.isAuthChecked = true;
         state.isLoading = false;
       })
       .addMatcher(isPendingAction, (state) => {

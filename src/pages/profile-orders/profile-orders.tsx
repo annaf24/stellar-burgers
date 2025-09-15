@@ -9,7 +9,7 @@ export const ProfileOrders: FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchOrders())
+    dispatch(fetchOrders());
   }, [dispatch]);
 
   const orders = useSelector(orderSelectors.getAllOrders);

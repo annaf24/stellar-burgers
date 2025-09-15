@@ -5,6 +5,7 @@ import { TOrder } from '@utils-types';
 type TOrderState = {
   order: TOrder | null;
   allOrders: TOrder[];
+  placedOrderData: TOrder | null;
   orderRequest: boolean;
   error: string | null;
 };
@@ -12,6 +13,7 @@ type TOrderState = {
 const initialState: TOrderState = {
   order: null,
   allOrders: [],
+  placedOrderData: null,
   orderRequest: false,
   error: null
 };
@@ -45,12 +47,13 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     clearOrderData: (state) => {
-      state.order = null;
+      state.placedOrderData = null;
     }
   },
   selectors: {
     getOrder: (state) => state.order,
     getAllOrders: (state) => state.allOrders,
+    getPlacedOrderData: (state) => state.placedOrderData,
     getOrderRequest: (state) => state.orderRequest,
     getOrderError: (state) => state.error
   },
@@ -62,7 +65,7 @@ const orderSlice = createSlice({
       })
       .addCase(createOrder.fulfilled, (state, action) => {
         state.orderRequest = false;
-        state.order = action.payload;
+        state.placedOrderData = action.payload;
       })
       .addCase(createOrder.rejected, (state, action) => {
         state.orderRequest = false;

@@ -48,5 +48,4 @@ const ingredientsSlice = createSlice({
 });
 
 export const ingredientsSelectors = ingredientsSlice.selectors;
-// LOG В компонентах const { items } = useSelector(ingredientsSelectors.getIngredients);
 export default ingredientsSlice;

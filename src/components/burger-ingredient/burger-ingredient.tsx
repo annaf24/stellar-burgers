@@ -10,10 +10,7 @@ export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(
   ({ ingredient, count }) => {
     const location = useLocation();
     const dispatch = useDispatch();
-    console.log('BurgerIngredient render', ingredient);
     const handleAdd = () => {
-      //LOG
-      console.log('Ingredient before dispatch:', ingredient);
       dispatch(constructorActions.addIngredient(ingredient));
     };
 

@@ -13,6 +13,7 @@ import {
 } from '../../services/slices/order';
 import { profileSelectors } from '../../services/slices/profile';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { getCookie } from '../../utils/cookie';
 
 export const BurgerConstructor: FC = () => {
   /** +++TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
@@ -30,9 +31,9 @@ export const BurgerConstructor: FC = () => {
   const constructorItems = useSelector(
     constructorSelectors.getConstructorItems
   );
-  console.log('Current constructor items:', constructorItems);
+
   const orderRequest = useSelector(orderSelectors.getOrderRequest);
-  const orderModalData = useSelector(orderSelectors.getOrder);
+  const orderModalData = useSelector(orderSelectors.getPlacedOrderData);
   const userData = useSelector(profileSelectors.selectUser);
 
   const onOrderClick = () => {
@@ -67,10 +68,6 @@ export const BurgerConstructor: FC = () => {
   );
 
   //return null;
-  //LOG
-  console.log('constructorItems:', constructorItems);
-  console.log('orderRequest:', orderRequest);
-  console.log('orderModalData:', orderModalData);
 
   return (
     <BurgerConstructorUI

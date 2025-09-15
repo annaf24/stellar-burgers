@@ -18,19 +18,13 @@ const constructorSlice = createSlice({
   reducers: {
     addIngredient: {
       reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
-        console.log('Reducer received payload:', action.payload);
-        console.log('State before adding:', state);
-
         if (action.payload.type === 'bun') {
           state.bun = action.payload;
         } else {
           state.ingredients.push(action.payload);
         }
-        console.log('State after adding:', state);
       },
       prepare: (ingredient: TIngredient) => {
-        //LOG
-        console.log('Preparing ingredient for reducer:', ingredient);
         return {
           payload: { ...ingredient, id: nanoid() } as TConstructorIngredient
         };
@@ -56,9 +50,6 @@ const constructorSlice = createSlice({
     }
   },
   selectors: {
-    // getIngredients: (state) => state.ingredients,
-    // getBun: (state) => state.bun,
-    // getConstructorSelector: (state) => state,
     getConstructorItems: (state) => ({
       bun: state.bun,
       ingredients: state.ingredients ?? []
@@ -66,15 +57,6 @@ const constructorSlice = createSlice({
   }
 });
 
-// export const {
-//   addIngredient,
-//   removeIngredient,
-//   moveIngredient,
-//   resetConstructor
-// } = constructorSlice.actions;
-
 export const constructorActions = constructorSlice.actions;
-
 export const constructorSelectors = constructorSlice.selectors;
-
 export default constructorSlice;

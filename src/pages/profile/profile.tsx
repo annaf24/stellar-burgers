@@ -1,7 +1,12 @@
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
-import { profileSelectors, updateUser } from '../../services/slices/profile';
+import {
+  getUser,
+  profileSelectors,
+  updateUser
+} from '../../services/slices/profile';
 import { useDispatch, useSelector } from '../../services/store';
+import { getCookie } from '../../utils/cookie';
 
 export const Profile: FC = () => {
   const dispatch = useDispatch();
@@ -10,6 +15,12 @@ export const Profile: FC = () => {
   //   name: '',
   //   email: ''
   // };
+
+  useEffect(() => {
+    if (getCookie('accessToken')) {
+      dispatch(getUser());
+    }
+  }, []);
 
   const user = useSelector(profileSelectors.selectUser);
 

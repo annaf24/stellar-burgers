@@ -12,6 +12,7 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
+import { deleteCookie, setCookie } from '../../utils/cookie';
 
 type TProfileState = {
   user: TUser | null;
@@ -30,7 +31,7 @@ const initialState: TProfileState = {
 // Thunk
 export const signUp = createAsyncThunk('profile/signUp', registerUserApi);
 export const signIn = createAsyncThunk('profile/signIn', loginUserApi);
-export const getUser = createAsyncThunk('profile/user', getUserApi);
+export const getUser = createAsyncThunk('profile/getUser', getUserApi);
 export const updateUser = createAsyncThunk('profile/update', updateUserApi);
 export const logout = createAsyncThunk('profile/logout', logoutApi);
 
@@ -66,11 +67,15 @@ const profileSlice = createSlice({
 
       .addCase(signUp.fulfilled, (state, action) => {
         state.user = action.payload.user;
+        localStorage.setItem('refreshToken', action.payload.refreshToken);
+        setCookie('accessToken', action.payload.accessToken);
         state.isAuthChecked = true;
         state.isLoading = false;
       })
       .addCase(signIn.fulfilled, (state, action) => {
         state.user = action.payload.user;
+        localStorage.setItem('refreshToken', action.payload.refreshToken);
+        setCookie('accessToken', action.payload.accessToken);
         state.isAuthChecked = true;
         state.isLoading = false;
       })
@@ -86,8 +91,10 @@ const profileSlice = createSlice({
       .addCase(logout.fulfilled, (state, action) => {
         state.user = null;
         state.error = null;
-        state.isAuthChecked = false;
+        state.isAuthChecked = true;
         state.isLoading = false;
+        localStorage.removeItem('refreshToken');
+        deleteCookie('accessToken');
       })
       .addCase(getUser.rejected, (state) => {
         state.user = null;
@@ -105,15 +112,6 @@ const profileSlice = createSlice({
   }
 });
 
-// export const {
-//     selectUser,
-//     selectIsLoading,
-//     selectIsAuthChecked,
-//     selectError
-// } = profileSlice.selectors;
-
 export const profileSelectors = profileSlice.selectors;
-
 export const { clearError, setAuthChecked } = profileSlice.actions;
-
 export default profileSlice;

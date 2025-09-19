@@ -1,24 +1,61 @@
 import { FC, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
+import { useDispatch, useSelector } from '../../services/store';
+import {
+  constructorActions,
+  constructorSelectors
+} from '../../services/slices/burger-constructor';
+import {
+  createOrder,
+  orderActions,
+  orderSelectors
+} from '../../services/slices/order';
+import { profileSelectors } from '../../services/slices/profile';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { getCookie } from '../../utils/cookie';
 
 export const BurgerConstructor: FC = () => {
-  /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
-  const constructorItems = {
-    bun: {
-      price: 0
-    },
-    ingredients: []
-  };
+  /** +++TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
+  // const constructorItems = {
+  //   bun: {
+  //     price: 0
+  //   },
+  //   ingredients: []
+  // };
 
-  const orderRequest = false;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  // const location = useLocation();
 
-  const orderModalData = null;
+  const constructorItems = useSelector(
+    constructorSelectors.getConstructorItems
+  );
+
+  const orderRequest = useSelector(orderSelectors.getOrderRequest);
+  const orderModalData = useSelector(orderSelectors.getPlacedOrderData);
+  const userData = useSelector(profileSelectors.selectUser);
 
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
+    if (!userData) {
+      navigate('/login');
+      return;
+    }
+
+    const ingredientsIds = [
+      constructorItems.bun._id,
+      ...constructorItems.ingredients.map((i) => i._id),
+      constructorItems.bun._id
+    ];
+
+    dispatch(createOrder(ingredientsIds));
   };
-  const closeOrderModal = () => {};
+
+  const closeOrderModal = () => {
+    dispatch(constructorActions.resetConstructor());
+    dispatch(orderActions.clearOrderData());
+  };
 
   const price = useMemo(
     () =>
@@ -30,7 +67,7 @@ export const BurgerConstructor: FC = () => {
     [constructorItems]
   );
 
-  return null;
+  //return null;
 
   return (
     <BurgerConstructorUI

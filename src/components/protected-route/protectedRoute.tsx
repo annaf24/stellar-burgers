@@ -1,7 +1,7 @@
 import { JSX } from 'react';
 import { useSelector } from '../../services/store';
 import { Navigate, useLocation } from 'react-router-dom';
-import { profileSelectors } from '../../services/slices/profile';
+import { profileSelectors } from '../../services/slices/profile/profile';
 import { Preloader } from '../ui/preloader';
 
 type TProtectedProps = {

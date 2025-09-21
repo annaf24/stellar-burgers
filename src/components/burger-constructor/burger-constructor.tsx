@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from '../../services/store';
 import {
   constructorActions,
   constructorSelectors
-} from '../../services/slices/burger-constructor';
+} from '../../services/slices/burger-constructor/burger-constructor';
 import {
   createOrder,
   orderActions,
   orderSelectors
-} from '../../services/slices/order';
-import { profileSelectors } from '../../services/slices/profile';
+} from '../../services/slices/order/order';
+import { profileSelectors } from '../../services/slices/profile/profile';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getCookie } from '../../utils/cookie';
 

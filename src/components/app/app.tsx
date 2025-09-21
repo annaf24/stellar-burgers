@@ -16,11 +16,11 @@ import styles from './app.module.css';
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 
 import { useEffect } from 'react';
-import { fetchIngredients } from '../../services/slices/ingredients';
+import { fetchIngredients } from '../../services/slices/ingredients/ingredients';
 import { useDispatch } from '../../services/store';
 
 import { OnlyAuth, OnlyUnAuth } from '../../components/protected-route';
-import { getUser } from '../../services/slices/profile';
+import { getUser } from '../../services/slices/profile/profile';
 
 const App = () => {
   const location = useLocation();

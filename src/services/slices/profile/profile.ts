@@ -12,7 +12,7 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
-import { deleteCookie, setCookie } from '../../utils/cookie';
+import { deleteCookie, setCookie } from '../../../utils/cookie';
 
 type TProfileState = {
   user: TUser | null;

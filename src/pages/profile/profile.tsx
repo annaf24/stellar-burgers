@@ -4,7 +4,7 @@ import {
   getUser,
   profileSelectors,
   updateUser
-} from '../../services/slices/profile';
+} from '../../services/slices/profile/profile';
 import { useDispatch, useSelector } from '../../services/store';
 import { getCookie } from '../../utils/cookie';
 
